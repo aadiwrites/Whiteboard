@@ -1,106 +1,23 @@
-const canvas = document.getElementById('board');
-const ctx = canvas.getContext('2d');
-const textInput = document.getElementById('textInput');
+// script.js const canvas = document.getElementById('board'); const ctx = canvas.getContext('2d'); const textInput = document.getElementById('textInput'); const stickyContainer = document.getElementById('stickyContainer');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 
-let drawing = false;
-let currentTool = 'draw';
-let paths = [];
-let undone = [];
+let drawing = false; let mode = 'draw'; let penColor = '#000000'; let penSize = 2; let eraserSize = 10; let history = []; let redoStack = [];
 
-let currentPath = [];
+function setMode(m) { mode = m; }
 
-canvas.addEventListener('mousedown', start);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stop);
+function updatePenSize() { penSize = parseInt(document.getElementById('penSize').value); }
 
-canvas.addEventListener('touchstart', (e) => start(e.touches[0]));
-canvas.addEventListener('touchmove', (e) => {
-  e.preventDefault();
-  draw(e.touches[0]);
-}, { passive: false });
-canvas.addEventListener('touchend', stop);
+function updateEraserSize() { eraserSize = parseInt(document.getElementById('eraserSize').value); }
 
-canvas.addEventListener('click', handleTextClick);
+function updatePenColor() { penColor = document.getElementById('penColor').value; }
 
-function setMode(mode) {
-  currentTool = mode;
-}
+canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('click', placeText);
 
-function start(e) {
-  if (currentTool !== 'draw' && currentTool !== 'erase') return;
-  drawing = true;
-  currentPath = [];
-  ctx.beginPath();
-  ctx.moveTo(e.clientX, e.clientY);
-  currentPath.push([e.clientX, e.clientY]);
-}
+function startDrawing(e) { if (mode === 'text') return; drawing = true; ctx.beginPath(); ctx.moveTo(e.clientX, e.clientY); saveHistory(); }
 
-function draw(e) {
-  if (!drawing) return;
-  ctx.lineTo(e.clientX, e.clientY);
-  ctx.strokeStyle = currentTool === 'erase' ? '#ffffff' : '#000000';
-  ctx.lineWidth = currentTool === 'erase' ? 20 : 2;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-  currentPath.push([e.clientX, e.clientY]);
-}
+function draw(e) { if (!drawing) return; if (mode === 'erase') { ctx.clearRect(e.clientX - eraserSize / 2, e.clientY - eraserSize / 2, eraserSize, eraserSize); } else { ctx.lineTo(e.clientX, e.clientY); ctx.strokeStyle = penColor; ctx.lineWidth = penSize; ctx.lineCap = 'round'; ctx.stroke(); } }
 
-function stop() {
-  if (!drawing) return;
-  drawing = false;
-  paths.push({ type: currentTool, points: currentPath });
-  undone = [];
-}
+function stopDrawing() { drawing = false; ctx.closePath(); }
 
-function undo() {
-  if (paths.length === 0) return;
-  undone.push(paths.pop());
-  redraw();
-}
-
-function redo() {
-  if (undone.length === 0) return;
-  paths.push(undone.pop());
-  redraw();
-}
-
-function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  paths = [];
-  undone = [];
-}
-
-function redraw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  paths.forEach(p => {
-    ctx.beginPath();
-    ctx.moveTo(p.points[0][0], p.points[0][1]);
-    p.points.forEach(([x, y]) => ctx.lineTo(x, y));
-    ctx.strokeStyle = p.type === 'erase' ? '#ffffff' : '#000000';
-    ctx.lineWidth = p.type === 'erase' ? 20 : 2;
-    ctx.stroke();
-  });
-}
-
-function handleTextClick(e) {
-  if (currentTool !== 'text') return;
-
-  textInput.style.left = e.clientX + 'px';
-  textInput.style.top = e.clientY + 'px';
-  textInput.style.display = 'block';
-  textInput.focus();
-
-  textInput.onkeydown = function (evt) {
-    if (evt.key === 'Enter') {
-      const text = textInput.value;
-      ctx.fillStyle = '#000000';
-      ctx.font = '18px sans-serif';
-      ctx.fillText(text, e.clientX, e.clientY);
-      textInput.value = '';
-      textInput.style.display = 'none';
-    }
-  };
-}
+function clearCanvas() { ctx.clearRect(0, 0, canvas.widt
