@@ -2,25 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Whiteboard with Text Tool</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whiteboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="toolbar">
-    <button onclick="setMode('draw')">✍️ Draw</button>
-    <button onclick="setMode('erase')">🧽 Erase</button>
-    <button onclick="undo()">↩️ Undo</button>
-    <button onclick="redo()">↪️ Redo</button>
-    <button onclick="clearCanvas()">🗑️ Clear</button>
-    <button onclick="setMode('text')">🔤 Text</button>
-  </div>
-
-  <canvas id="board"></canvas>
-
-  <!-- Hidden input for typing text -->
-  <input type="text" id="textInput" placeholder="Type here..." />
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <div class="tool-row">
+      <button onclick="setMode('draw')">✏️ Draw</button>
+      <button onclick="setMode('erase')">🧽 Erase</button>
+      <button onclick="setMode('text')">📝 Text</button>
+      <button onclick="addStickyNote()">📌 Sticky</button>
+    </div>
+    <div class="tool-row">
+      <label>Pen Size:</label>
+      <input type="range" id="penSize" min="1" max="20" value="2" onchange="updatePenSize()" />
+      <label>Eraser Size:</label>
+      <input type="range" id="eraserSize" min="5" max="50" value="10" onchange="
