@@ -1,170 +1,42 @@
-/* Basic Reset */
-* {
-  box-sizing: border-box;
+body {
   margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  font-family: sans-serif;
 }
 
-body, html {
-  height: 100%;
-  background: #f0f0f0;
+.toolbar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 2;
 }
 
-#toolbar {
-  background: #333;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-
-#toolbar button {
-  background: #555;
+button {
+  margin: 4px;
+  padding: 6px 10px;
   border: none;
+  border-radius: 6px;
+  background: #007bff;
   color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s ease;
 }
 
-#toolbar button:hover, #toolbar button.active {
-  background: #0078d4;
-}
-
-#whiteboardContainer {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 58px);
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-canvas#whiteboard {
-  border: 1px solid #ccc;
-  background: white;
-  touch-action: none; /* important for mobile drawing */
-  max-width: 100%;
-  max-height: 100%;
-}
-
-/* Grid Background */
-canvas.grid {
-  background-image:
-    linear-gradient(#eee 1px, transparent 1px),
-    linear-gradient(90deg, #eee 1px, transparent 1px);
-  background-size: 25px 25px;
-}
-
-/* Sticky Notes Container */
-#stickyNotesContainer {
+canvas {
   position: absolute;
-  top: 58px;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: calc(100vh - 58px);
-  pointer-events: none;
 }
 
-/* Sticky Note Style */
-.sticky-note {
+#textInput {
   position: absolute;
-  width: 150px;
-  min-height: 100px;
-  background: #fffa77;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-  padding: 10px;
-  border-radius: 5px;
-  pointer-events: auto;
-  resize: both;
-  overflow: auto;
-  font-size: 14px;
-  user-select: text;
-}
-
-.sticky-note textarea {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  resize: none;
-  font-size: 14px;
-  font-family: inherit;
-}
-
-/* Modal Styles for Template Selection */
-.modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1000; 
-  left: 0; 
-  top: 0; 
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.5); 
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto; 
-  padding: 20px;
-  border: 1px solid #888;
-  width: 300px; 
-  border-radius: 8px;
-  text-align: center;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-}
-
-#templateList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.template-item {
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px;
-  font-weight: 600;
-  background-color: #eee;
-  transition: background-color 0.2s ease;
-}
-
-.template-item:hover {
-  background-color: #0078d4;
-  color: white;
-}
-
-/* Responsive tweaks */
-@media (max-width: 600px) {
-  #toolbar button {
-    font-size: 14px;
-    padding: 6px 10px;
-  }
-  .sticky-note {
-    width: 120px;
-    min-height: 80px;
-    font-size: 12px;
-  }
+  display: none;
+  border: 2px solid #007bff;
+  font-size: 18px;
+  background: white;
+  padding: 4px;
+  z-index: 3;
 }
