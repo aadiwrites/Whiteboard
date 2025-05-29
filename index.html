@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free Whiteboard</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toolbar">
+    <button id="drawBtn" title="Draw">✏️ Draw</button>
+    <button id="eraseBtn" title="Erase">🧽 Erase</button>
+    <button id="textBtn" title="Add Text">📝 Text</button>
+    <button id="undoBtn" title="Undo">↩️ Undo</button>
+    <button id="redoBtn" title="Redo">↪️ Redo</button>
+    <button id="clearBtn" title="Clear All">🗑️ Clear</button>
+    <button id="saveBtn" title="Save as Image">📸 Save</button>
+    <button id="gridToggleBtn" title="Toggle Grid">📐 Grid</button>
+    <button id="stickyNoteBtn" title="Add Sticky Note">📌 Sticky Note</button>
+    <button id="templateBtn" title="Add Diagram Template">🧪 Template</button>
+    <button id="collabBtn" title="Toggle Collaboration">🤝 Collab</button>
+  </div>
+  <div id="whiteboardContainer">
+    <canvas id="whiteboard"></canvas>
+  </div>
+
+  <!-- Sticky Notes Container -->
+  <div id="stickyNotesContainer"></div>
+
+  <!-- Template Selection Modal -->
+  <div id="templateModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Select Diagram Template</h3>
+      <div id="templateList">
+        <!-- Templates will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
